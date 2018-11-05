@@ -95,7 +95,7 @@ The major output `MHW` contains all detected MHW/MCS events, characterized by 9 
 </tr>
 <tr class="even">
 <td><code>mhw_end</code></td>
-<td>Similar to `mhw_onset`, but indicating the end date (YYYYMMDD). </td>
+<td>Similar to <code>mhw_onset</code>, but indicating the end date (YYYYMMDD). </td>
 </tr>
 <tr class="odd">
 <td><code>mhw_dur</code></td>
