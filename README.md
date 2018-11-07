@@ -7,6 +7,9 @@ The **`m_mhw`** toolbox is designed 1) to determine spatial MHWs according to th
 
 The detection of MHW/MCS in each grid of data is done by simple loop instead of parallel computation. This is due to the fact that the size of detected MHW/MCS events (i.e. the number of events) is absolutely unknown, hence the resultant output MHW matrix has to be changed in each step. This is against the principal of parallel computation, which requires the independence of each step of calculation. Although we could still achieve parallel computation by detecting and storing each MHW independently, it means that we need to add another loop to combine them into a new matrix. If we do so, the resultant codes would only be a little bit faster than original codes using simple loops. Additionally, introducing parallel computation could also increase the complexity of this toolbox, which could be hard to handle by new users to matlab.
 
+Installation
+-------------
+
 Functions
 -------------
 
