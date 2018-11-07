@@ -63,13 +63,191 @@ datenum(num2str(MHW{1:5,:}),'yyyymmdd') % number
 Visualizing MHW/MCS time series
 -------------
 
-In this section we use `event_line` to visualize MHW/MCS events in grid (1,2). Firstly, let’s have a look of MHW time series during Sep 2015 to Apr 2016 in this loc.
+In this section we use `event_line` to visualize MHW/MCS events in grid (1,2). Firstly, let’s have a look at MHW time series during Sep 2015 to Apr 2016 in this loc.
 
 ```
 % Have a look of MHW events in grid (1,2) from Sep 2015 to Apr 2016
 figure('pos',[10 10 1000 1000]);
 event_line(sst_full,MHW,mclim,m90,[1 2],1982,[2015 9 1],[2016 5 1]);
 ```
-
 ![Image text](https://github.com/ZijieZhao/see/blob/master/store_figure/event_mhw.png)
+
+From this plot, we could see that oceanic region off eastern Tasmania in austral summer during 2015/2016 is dominated by intense MHWs, which has been already well discussed in Oliver et al. (2016).
+
+Let's also have a look of MCS time series during 1994.
+
+```
+% Have a look of MCS events in grid (1,2) during 1994
+figure('pos',[10 10 1000 1000]);
+event_line(sst_full,MCS,mclim,m10,[1 2],1982,[1994 1 1],[1994 12 31],'Event','MCS','Color',[0.5 0.5 1]);
+```
+![Image text](https://github.com/ZijieZhao/see/blob/master/store_figure/event_mcs.png)
+
+We could see that this year is dominated by four different MCS events, majorly in Jul to Sep.
+
+Mean states and trends
+-------------
+
+In this section, we would like to see the mean states and trends of MHW properties (frequency, duration, maximum intensity, mean intensity. Similar approach has been done by Oliver et al. (2018). In this section, we use **`m_map`** toolbox (https://www.eoas.ubc.ca/~rich/map.html) to visualize resultant outputs.
+
+```
+% This function could detect mean states and trends for six different
+% variables (Frequency, mean intensity, max intensity, duration and total
+% MHW/MCs days). 
+
+metric_used={'Frequency','MeanInt','MaxInt','CumInt','Duration','Days'};
+
+for i=1:6;
+    eval(['[mean_' metric_used{i} ',annual_' metric_used{i} ',trend_' metric_used{i} ',p_' metric_used{i} ']=mean_and_trend(MHW,mhw_ts,1993,' '''' 'Metric' '''' ',' 'metric_used{i}' ');'])
+end
+```
+
+For each metric, we get four outputs, which are `mean_?`, `annual_?`, `trend_?`, `p_?`, separately indicating the total mean, annual mean, annual trend and associated p-value of specified metric. 
+
+See if we could plot them.
+
+```
+% plot mean and trend
+
+% It could be detected that, as a global hotspot, the oceanic region off
+% eastern Tasmania exhibits significant positive trends of MHW metrics. 
+
+figure('pos',[10 10 1500 1500]);
+
+
+subplot(2,6,1);
+m_contourf(lon_used,lat_used,mean_Frequency',2:0.1:5,'linestyle','none');
+m_gshhs_h('patch',[1 1 1]);
+m_grid;
+colormap(jet);
+s=colorbar('location','southoutside');
+m_text(148,-44,'a) Frequency','fontweight','bold','fontsize',14);
+
+subplot(2,6,2);
+m_contourf(lon_used,lat_used,mean_MeanInt',1:0.1:2.5,'linestyle','none');
+m_gshhs_h('patch',[1 1 1]);
+m_grid;
+colormap(jet);
+m_text(148,-44,'b) MeanInt','fontweight','bold','fontsize',14);
+s=colorbar('location','southoutside');
+
+subplot(2,6,3);
+m_contourf(lon_used,lat_used,mean_MaxInt',1:0.1:3,'linestyle','none');
+m_gshhs_h('patch',[1 1 1]);
+m_grid;
+colormap(jet);
+m_text(148,-44,'c) MaxInt','fontweight','bold','fontsize',14);
+s=colorbar('location','southoutside');
+
+subplot(2,6,4);
+m_contourf(lon_used,lat_used,mean_CumInt',15:0.1:50,'linestyle','none');
+m_gshhs_h('patch',[1 1 1]);
+m_grid;
+colormap(jet);
+m_text(148,-44,'d) CumInt','fontweight','bold','fontsize',14);
+s=colorbar('location','southoutside');
+
+subplot(2,6,5);
+m_contourf(lon_used,lat_used,mean_Duration',9:0.1:27,'linestyle','none');
+m_gshhs_h('patch',[1 1 1]);
+m_grid;
+colormap(jet);
+m_text(148,-44,'e) Duration','fontweight','bold','fontsize',14);
+s=colorbar('location','southoutside');
+
+subplot(2,6,6);
+m_contourf(lon_used,lat_used,mean_Days',26:0.1:72,'linestyle','none');
+m_gshhs_h('patch',[1 1 1]);
+m_grid;
+colormap(jet);
+m_text(148,-44,'f) Days','fontweight','bold','fontsize',14);
+s=colorbar('location','southoutside');
+
+subplot(2,6,7);
+m_contourf(lon_used,lat_used,(trend_Frequency')*10,0.5:0.05:3.5,'linestyle','none');
+s=colorbar('location','southoutside');
+m_gshhs_h('patch',[1 1 1]);
+m_grid;
+[lon,lat]=meshgrid(lon_used,lat_used);
+lon=lon';
+lat=lat';
+hold on
+m_scatter(lon(p_Frequency<0.05),lat(p_Frequency<0.05),1.5,'k');
+colormap(jet);
+m_text(148,-44,'g) t-Frequency','fontweight','bold','fontsize',14);
+
+subplot(2,6,8);
+m_contourf(lon_used,lat_used,(trend_MeanInt')*10,-0.4:0.05:0.4,'linestyle','none');
+m_gshhs_h('patch',[1 1 1]);
+m_grid;
+s=colorbar('location','southoutside');
+[lon,lat]=meshgrid(lon_used,lat_used);
+lon=lon';
+lat=lat';
+hold on
+m_scatter(lon(p_MeanInt<0.05),lat(p_MeanInt<0.05),1.5,'k');
+colormap(jet);
+caxis([-0.4 0.4]);
+m_text(148,-44,'h) t-MeanInt','fontweight','bold','fontsize',14);
+
+subplot(2,6,9);
+m_contourf(lon_used,lat_used,(trend_MaxInt')*10,-0.4:0.05:0.4,'linestyle','none');
+s=colorbar('location','southoutside');
+m_gshhs_h('patch',[1 1 1]);
+m_grid;
+[lon,lat]=meshgrid(lon_used,lat_used);
+lon=lon';
+lat=lat';
+hold on
+m_scatter(lon(p_MaxInt<0.05),lat(p_MaxInt<0.05),1.5,'k');
+colormap(jet);
+caxis([-0.4 0.4]);
+m_text(148,-44,'i) t-MaxInt','fontweight','bold','fontsize',14);
+
+subplot(2,6,10);
+m_contourf(lon_used,lat_used,(trend_CumInt')*10,-0.4:0.1:110,'linestyle','none');
+s=colorbar('location','southoutside');
+m_gshhs_h('patch',[1 1 1]);
+m_grid;
+[lon,lat]=meshgrid(lon_used,lat_used);
+lon=lon';
+lat=lat';
+hold on
+m_scatter(lon(p_CumInt<0.05),lat(p_CumInt<0.05),1.5,'k');
+colormap(jet);
+caxis([0 110]);
+m_text(148,-44,'j) t-CumInt','fontweight','bold','fontsize',14);
+
+
+subplot(2,6,11);
+m_contourf(lon_used,lat_used,(trend_Duration')*10,-3:0.1:42,'linestyle','none');
+s=colorbar('location','southoutside');
+m_gshhs_h('patch',[1 1 1]);
+m_grid;
+[lon,lat]=meshgrid(lon_used,lat_used);
+lon=lon';
+lat=lat';
+hold on
+m_scatter(lon(p_Duration<0.05),lat(p_Duration<0.05),1.5,'k');
+colormap(jet);
+caxis([0 40]);
+m_text(148,-44,'k) t-Duration','fontweight','bold','fontsize',14);
+
+subplot(2,6,12);
+m_contourf(lon_used,lat_used,(trend_Days')*10,0:0.1:75,'linestyle','none');
+s=colorbar('location','southoutside');
+m_gshhs_h('patch',[1 1 1]);
+m_grid;
+[lon,lat]=meshgrid(lon_used,lat_used);
+lon=lon';
+lat=lat';
+hold on
+m_scatter(lon(p_Days<0.05),lat(p_Days<0.05),1.5,'k');
+colormap(jet);
+caxis([0 74]);
+m_text(148,-44,'l) t-Days','fontweight','bold','fontsize',14);
+
+```
+![Image text](https://github.com/ZijieZhao/see/blob/master/store_figure/mean_and_trend.png)
+
 
