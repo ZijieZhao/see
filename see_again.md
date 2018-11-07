@@ -315,7 +315,56 @@ title('First Difference of Correlation','fontsize',16);
 set(gca,'fontsize',16);
 
 ```
-![Image text](https://github.com/ZijieZhao/see/blob/master/store_figure/mean_and_trend.png)
+![Image text](https://github.com/ZijieZhao/see/blob/master/store_figure/determine_k.png)
+
+From this plot, it could be detected that, when number of groups reaches 9, the correlation increases to a relatively high value (~0.9) and its associated first difference tends to be stationary. Therefore, we choose 9 groups for kmeans analysis.
+
+Using 9 groups' kmeans, means and proportion of elements in each group are determined.
+
+```
+k=kmeans(data_for_k,9,'Distance','cityblock','maxiter',200);
+
+k_9=[];
+prop_9=[];
+for i=1:9;
+    data_here=data_for_k(k==i,:);
+    data_here=nanmean(data_here);
+    data_here=data_here.*sd+mu;
+    k_9=[k_9;data_here];
+    prop_9=[prop_9;nansum(k==i)./size(data_for_k,1)];
+end
+```
+
+Then plot them using colormap. The proportions of events in each group are labelled.
+
+![Image text](https://github.com/ZijieZhao/see/blob/master/store_figure/codebook.png)
+
+From this plot, we could see that more than 70000 MHW events are classified into 9 groups by their associated metric. Each group exhibits distinct MHW metrics, e.g. few (1%) intense (large MaxInt and MeanInt) and long (large Duration and CumInt) MHWs tend to happen in Group 7.
+
+Let's see their associated SST anomaly patterns.
+
+Firstly we need to calculate the SST anomaly (SSTA). The SSTA in each group is calculated by averaging SSTA across all detected MHWs in its associated group.
+
+```
+% Their associated SSTA patterns
+
+% Calculate SSTA
+
+time_used=datevec(datenum(1982,1,1):datenum(2016,12,31));
+m_d_unique=unique(time_used(:,2:3),'rows');
+
+ssta_full=NaN(size(sst_full));
+
+for i=1:size(m_d_unique);
+    date_here=m_d_unique(i,:);
+    index_here=find(time_used(:,2)==date_here(1) & time_used(:,3)==date_here(2));
+    ssta_full(:,:,index_here)=sst_full(:,:,index_here)-nanmean(sst_full(:,:,index_here),3);
+end
+```
+![Image text](https://github.com/ZijieZhao/see/blob/master/store_figure/sst_9.png)
+
+
+
 
 
 
