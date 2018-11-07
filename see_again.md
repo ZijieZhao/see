@@ -6,7 +6,7 @@ We provide an example about applying **`m_mhw`** to real-world data. In this exa
 Loading data
 -------------
 
-Firstly, Let’s load NOAA OI SST data (Reynolds et al., 2007). Due to the limitation of file size in Github, these data are stored in folder `data` for one year per file. We need to reconstruct these data into one combined dataset.
+Firstly, let’s load NOAA OI SST data (Reynolds et al., 2007). Due to the limitation of file size in Github, these data are stored in folder `data` for one year per file. We need to reconstruct these data into one combined dataset.
 
 ```
 sst_full=NaN(32,32,datenum(2016,12,31)-datenum(1982,1,1)+1);
@@ -52,7 +52,7 @@ MHW(1:5,:)
 MCS(1:5,:)
 ```
 
-The properties `mhw_onset` and `mhw_end`are in a strange format. This is due to the fact that they are originally constructed in numeric format. We could change it to date format by following steps.
+The properties `mhw_onset` and `mhw_end` are in a strange format. This is due to the fact that they are originally constructed in numeric format. We could change it to date format by following steps.
 
 ```
 datevec(num2str(MHW{1:5,:}),'yyyymmdd') % vector
@@ -74,7 +74,7 @@ event_line(sst_full,MHW,mclim,m90,[1 2],1982,[2015 9 1],[2016 5 1]);
 
 From this plot, we could see that oceanic region off eastern Tasmania in austral summer during 2015/2016 is dominated by intense MHWs, which has been already well discussed in Oliver et al. (2016).
 
-Let's also have a look of MCS time series during 1994.
+Let's also have a look at MCS time series during 1994.
 
 ```
 % Have a look of MCS events in grid (1,2) during 1994
