@@ -73,5 +73,5 @@ event_line(sst_full,MHW,mclim,m90,[1 2],1982,[2015 9 1],[2016 5 1]);
 
 <div>
 <center>
-<img src=“store_figure/event_mhw.png” width="60%">
+<img src=“see/store_figure/event_mhw.png” width="60%">
 </div>
