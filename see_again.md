@@ -1,4 +1,4 @@
-A Example about applying **`m_mhw`** to real-world data
+An example about applying **`m_mhw`** to real-world data
 ==================================================================
 
 We provide an example about applying **`m_mhw`** to real-world data. In this example, we use **`m_mhw`** to detect and analyze MHWs off eastern Tasmania during 1982 - 2016.
@@ -362,6 +362,27 @@ for i=1:size(m_d_unique);
 end
 ```
 ![Image text](https://github.com/ZijieZhao/see/blob/master/store_figure/sst_9.png)
+
+It could be detected that the existence of MHWs in this region is always companied by significant oceanic characteristics. Firstly, MHWs tend to happen in the period when oceanic region off eastern Tasmania is anomalously warm. Additionally, distinct surface conditions exist during specified MHW groups, e.g. sea surface is extremely hot during MHWs in Group 7.
+
+More things....
+-------------
+
+For more example and tutorial please contact zijiezhaomj@gmail.com.
+
+Reference
+-------------
+
+Hobday, A.J. et al. (2016). A hierarchical approach to defining marine heatwaves, Progress in Oceanography, 141, pp. 227-238.
+
+Schlegel, R. W., Oliver, E. C. J., Wernberg, T. W., Smit, A. J. (2017). Nearshore and offshore co-occurrences of marine heatwaves and cold-spells. Progress in Oceanography, 151, pp. 189-205.
+
+Oliver, E.C., Benthuysen, J.A., Bindoff, N.L., Hobday, A.J., Holbrook, N.J., Mundy, C.N. and Perkins-Kirkpatrick, S.E., 2017. The unprecedented 2015/16 Tasman Sea marine heatwave. Nature communications, 8, p.16101.
+
+Oliver, E.C., Lago, V., Hobday, A.J., Holbrook, N.J., Ling, S.D. and Mundy, C.N., 2018. Marine heatwaves off eastern Tasmania: Trends, interannual variability, and predictability. Progress in Oceanography, 161, pp.116-130.
+
+Reynolds, Richard W., Thomas M. Smith, Chunying Liu, Dudley B. Chelton, Kenneth S. Casey, Michael G. Schlax, 2007: Daily High-Resolution-Blended Analyses for Sea Surface Temperature. J. Climate, 20, 5473-5496. 
+
 
 
 
