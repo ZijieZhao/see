@@ -133,6 +133,13 @@ The major output `MHW` contains all detected MHW/MCS events, characterized by 9 
 </tbody>
 </table>
 
+Contributing to **`heatwaveR`**
+----------
+
+To contribute to the package please follow the guidelines here.
+
+Please use this [link](https://github.com/ZijieZhao/see/issues) to report any bugs found.
+
 References
 ----------
 
