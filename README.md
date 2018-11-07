@@ -70,7 +70,7 @@ The core function `detect` would return four outputs, which are `MHW`, `mclim`, 
 </tr>
 <tr class=“even”>
 <td><code>mhw_ts</code></td>
-<td>A 3D numeric matrix in size of (x,y,t), containing daily MHW/MCS intensity. 0 in this variable indicates that corresponding day is not in a MHW/MCS event and NaN indicates missing value or lands. </td>
+<td>A 3D numeric matrix in size of (x,y,(datenum(MHW_end,1,1)-datenum(MHW_start)+1)), containing daily MHW/MCS intensity. 0 in this variable indicates that corresponding day is not in a MHW/MCS event and NaN indicates missing value or lands. </td>
 </tr>
 </tbody>
 </table>
