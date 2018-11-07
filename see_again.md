@@ -104,7 +104,7 @@ end
 
 For each metric, we get four outputs, which are `mean_?`, `annual_?`, `trend_?`, `p_?`, separately indicating the total mean, annual mean, annual trend and associated p-value of specified metric. 
 
-See if we could plot them.
+See if we could plot them. Note that here we actually show the decadal trend instead of annual trend to avoid too small values.
 
 ```
 % plot mean and trend
@@ -249,5 +249,73 @@ m_text(148,-44,'l) t-Days','fontweight','bold','fontsize',14);
 
 ```
 ![Image text](https://github.com/ZijieZhao/see/blob/master/store_figure/mean_and_trend.png)
+
+We could see that, as a globally recongized hotspot, oceanic region in eastern Tasmania exhibits significantly increasing MHW metrics in most regions.
+
+Applying cluster algoirthm to MHW - A kmeans example.
+-------------
+
+We get so many MHW events. Could we use some cluster algorithm to divide them into different groups based on their properties? Let's try kmeans. We use mean, maximum, cumulative intensity and duration as variable for cluster algorithm.
+
+```
+% Change it to matrix;
+MHW_m=MHW{:,:};
+
+% Extract mean, max, cumulative intensity and duration.
+MHW_m=MHW_m(:,[3 4 5 7]); 
+
+[data_for_k,mu,sd]=zscore(MHW_m);
+
+```
+
+Determination of suitable groups of kmeans is an important step. Here we use a correlation - based method to determine a suitable number of clusters. As more nodes were included, the generated patterns were reconstructed into a dataset with the same size as the original data by duplicating each pattern based on its allocated temporal data; the correlations between these two datasets were then calculated. The final map size of the SOM was determined as that size at which the correlation tended to a constant.
+
+```
+
+% Determine suitable groups of kmeans cluster.
+index_full=[];
+cor_full=[];
+for i=2:20;
+    k=kmeans(data_for_k,i,'Distance','cityblock','maxiter',200);
+    k_full=[];
+    for j=1:i;
+        k_full=[k_full;nanmean(data_for_k(k==j,:))];
+    end
+    
+    k_cor=k_full(k,:);
+    k_cor=k_cor(:);
+    
+    [c,p]=corr([data_for_k(:) k_cor]);
+    
+    index_full=[index_full;2];
+    cor_full=[cor_full;c(1,2)];
+        
+        
+end
+
+% Plot correlations and their first difference
+
+figure('pos',[10 10 1500 1500]);
+subplot(1,2,1);
+plot(2:20,cor_full,'linewidth',2);
+hold on
+plot(9*ones(1000,1),linspace(0.6,1,1000),'r--');
+xlabel('Number of Groups','fontsize',16,'fontweight','bold');
+ylabel('Correlation','fontsize',16,'fontweight','bold');
+title('Correlation','fontsize',16);
+set(gca,'xtick',[5 9 10 15 20],'fontsize',16);
+
+subplot(1,2,2);
+plot(3:20,diff(cor_full),'linewidth',2);
+hold on
+plot(9*ones(1000,1),linspace(-0.02,0.14,1000),'r--');
+xlabel('Number of Groups','fontsize',16,'fontweight','bold');
+ylabel('First difference of Correlation','fontsize',16,'fontweight','bold');
+title('First Difference of Correlation','fontsize',16);
+set(gca,'fontsize',16);
+
+```
+![Image text](https://github.com/ZijieZhao/see/blob/master/store_figure/mean_and_trend.png)
+
 
 
