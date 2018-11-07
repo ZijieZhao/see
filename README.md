@@ -10,6 +10,8 @@ The detection of MHW/MCS in each grid of data is done by simple loop instead of 
 Installation
 -------------
 
+The installation of this toolbox could be directly achieved by downloading this repositories and add its path in your MATLAB.
+
 Functions
 -------------
 
