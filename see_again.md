@@ -255,7 +255,7 @@ We could see that, as a globally recongized hotspot, oceanic region in eastern T
 Applying cluster algoirthm to MHW - A kmeans example.
 -------------
 
-We get so many MHW events. Could we use some cluster algorithm to divide them into different groups based on their properties? Let's try kmeans. We use mean, maximum, cumulative intensity and duration as variable for cluster algorithm.
+We get so many MHW events. Could we use some cluster algorithms to divide them into different groups based on their properties? Let's try kmeans. We use mean, maximum, cumulative intensity and duration as variable for cluster algorithm.
 
 ```
 % Change it to matrix;
@@ -343,7 +343,7 @@ From this plot, we could see that more than 70000 MHW events are classified into
 
 Let's see their associated SST anomaly patterns.
 
-Firstly we need to calculate the SST anomaly (SSTA). The SSTA in each group is calculated by averaging SSTA across all detected MHWs in its associated group.
+Firstly we need to calculate the SST anomaly (SSTA). The SSTA in each group is calculated by averaging SSTA across all detected MHWs in their associated group.
 
 ```
 % Their associated SSTA patterns
@@ -368,7 +368,7 @@ It could be detected that the existence of MHWs in this region is always compani
 More things....
 -------------
 
-For more example and tutorial please contact zijiezhaomj@gmail.com.
+For more examples and tutorial please contact zijiezhaomj@gmail.com.
 
 Reference
 -------------
